@@ -55,7 +55,7 @@ def update_screen(ai_settings, screen, ship, aliens, bullets):
     # Make the most recently drawn screen visible       
     pygame.display.flip()
     
-def update_bullets(bullets):
+def update_bullets(bullets, aliens):
     """Update the position of bullets and get rid of old bullets."""
     bullets.update()
         
@@ -63,7 +63,8 @@ def update_bullets(bullets):
     for bullet in bullets:
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-            
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    
 def get_number_rows(ai_settings, ship_height, alien_height):
     """Determine the number of rows that can fit on the screen"""
     available_space = (ai_settings.screen_height - (3 * alien_height) - 
@@ -121,6 +122,8 @@ def update_aliens(ai_settings, aliens):
     """
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
+    
+    
         
 
         
