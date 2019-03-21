@@ -4,6 +4,7 @@ from pygame.sprite import Group
 from ship import Ship
 import game_functions as gf
 from game_stats import GameStats
+from button import Button
 
 def run_game():
     """ Initialize game and create a screen object."""
@@ -12,6 +13,9 @@ def run_game():
     screen = pygame.display.set_mode(
         (ai_settings.screen_width, ai_settings.screen_height )
             ) # Returns Surface
+            
+    # Make a play button
+    play_button = Button(ai_settings, screen, "Play")
     
     # Make a ship, a group of aliens and a group of bullets
     ship = Ship(ai_settings, screen)
@@ -34,13 +38,15 @@ def run_game():
         
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
-            gf.update_aliens(ai_settings, ship, screen, stats, aliens, bullets)
-            gf.update_screen(ai_settings, screen, ship, aliens, bullets)
+            gf.update_bullets(ai_settings, screen, ship, aliens, 
+                bullets)
+            gf.update_aliens(ai_settings, ship, screen, stats, aliens, 
+                bullets)
             
-        else:
-            screen.fill((255, 0, 0))
-            pygame.display.flip()
+        gf.update_screen(ai_settings, screen, stats, ship, aliens, 
+            bullets, play_button)
+        
+
 
 
 run_game()
