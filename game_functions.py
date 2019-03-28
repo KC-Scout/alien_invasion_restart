@@ -41,7 +41,8 @@ def check_events(ai_settings, screen, stats, play_button, ship,
             sys.exit()
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_post()
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            check_play_button(stats, play_button, mouse_x, mouse_y)
             
         elif event.type == pygame.KEYDOWN: 
             check_key_down_events(event, ai_settings, screen, ship, 
@@ -49,6 +50,11 @@ def check_events(ai_settings, screen, stats, play_button, ship,
                 
         elif event.type == pygame.KEYUP:
             check_key_up_events(event, ship)
+            
+def check_play_button(stats, play_button, mouse_x, mouse_y):
+    """Start a new game when the player clicks play"""
+    if play_button.rect.collidepoint(mouse_x, mouse_y):
+        stats.game_active = True
                 
 def update_screen(ai_settings, screen, stats, ship, aliens, bullets, 
         play_button):
