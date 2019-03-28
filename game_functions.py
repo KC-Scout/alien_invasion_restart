@@ -66,7 +66,7 @@ def check_play_button(ai_settings, screen, stats, play_button, ship,
         
         # Create a new fleet and center the ship
         create_fleet(ai_settings, screen, ship, aliens)
-        ship.center()
+        ship.center_ship()
                 
 def update_screen(ai_settings, screen, stats, ship, aliens, bullets, 
         play_button):
