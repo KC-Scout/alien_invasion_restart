@@ -61,6 +61,9 @@ def check_play_button(ai_settings, screen, stats, play_button, ship,
         stats.reset_stats()
         stats.game_active = True
         
+        # Hicd the mouse during play
+        pygame.mouse.set_visible(False)
+        
         # Empty the list of aliens and bullets
         aliens.empty()
         bullets.empty()
@@ -177,6 +180,7 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         print(stats.ships_left)
     else:
         stats.game_active = False
+        pygame.mouse.set_visible(True)
     
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
     """Check if any aliens have reached the bottom of the screen."""
