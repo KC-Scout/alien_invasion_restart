@@ -75,7 +75,7 @@ def check_play_button(ai_settings, screen, stats, play_button, ship,
         create_fleet(ai_settings, screen, ship, aliens)
         ship.center_ship()
                 
-def update_screen(ai_settings, screen, stats, ship, aliens, bullets, 
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, 
         play_button):
     """Update images on the screen and flip to the new scren."""
     screen.fill(ai_settings.bg_color) # Fill is a method of Surface object
@@ -84,6 +84,9 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
         bullet.draw_bullet()
     ship.blitme()
     aliens.draw(screen)
+    
+    # Show the score information
+    sb.show_score()
     
     # Draw a play button if the game is inactive
     if not stats.game_active:
@@ -94,17 +97,23 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets,
     
     
     
-def check_bullet_alien_collision(ai_settings, screen, ship, aliens, bullets):
+def check_bullet_alien_collision(ai_settings, screen, stats, sb, ship, 
+    aliens, bullets):
     """"Check if a bullet has hit an alien"""
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
-    
+    if collisions:
+        stats.score += ai_settings.alien_points
+        sb.prep_score()
+        
+    # If all aliens eliminated
     if len(aliens) == 0:
         # Destroy existing bullets and create new fleet
         bullets.empty()
         ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
     
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, 
+    bullets):
     """Update the position of bullets and get rid of old bullets."""
     bullets.update()
         
@@ -113,7 +122,8 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
             
-    check_bullet_alien_collision(ai_settings, screen, ship, aliens, bullets)
+    check_bullet_alien_collision(ai_settings, screen, stats, sb, ship, 
+        aliens, bullets)
     
 def get_number_rows(ai_settings, ship_height, alien_height):
     """Determine the number of rows that can fit on the screen"""

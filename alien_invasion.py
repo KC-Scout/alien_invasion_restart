@@ -5,6 +5,7 @@ from ship import Ship
 import game_functions as gf
 from game_stats import GameStats
 from button import Button
+from scoreboard import Scoreboard
 
 def run_game():
     """ Initialize game and create a screen object."""
@@ -22,8 +23,9 @@ def run_game():
     bullets = Group()
     aliens = Group()
     
-    # Create an instance of game statistics
+    # Create an instance of game statistics and create a scoreboard
     stats = GameStats(ai_settings)
+    sb = Scoreboard(ai_settings, screen, stats)
     
     # Create a fleet of aliens
     gf.create_fleet(ai_settings, screen, ship, aliens)
@@ -39,12 +41,12 @@ def run_game():
         
         if stats.game_active:
             ship.update()
-            gf.update_bullets(ai_settings, screen, ship, aliens, 
-                bullets)
+            gf.update_bullets(ai_settings, screen, stats, sb, ship, 
+                aliens, bullets)
             gf.update_aliens(ai_settings, ship, screen, stats, aliens, 
                 bullets)
             
-        gf.update_screen(ai_settings, screen, stats, ship, aliens, 
+        gf.update_screen(ai_settings, screen, stats, sb, ship, aliens, 
             bullets, play_button)
         
 
