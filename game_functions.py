@@ -102,8 +102,10 @@ def check_bullet_alien_collision(ai_settings, screen, stats, sb, ship,
     """"Check if a bullet has hit an alien"""
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if collisions:
-        stats.score += ai_settings.alien_points
-        sb.prep_score()
+        for aliens in collisions.values():
+            stats.score += ai_settings.alien_points * len(aliens)
+            sb.prep_score()
+
         
     # If all aliens eliminated
     if len(aliens) == 0:

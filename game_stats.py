@@ -4,6 +4,7 @@ class GameStats():
         """Initailize statistics"""
         self.ai_settings = ai_settings
         self.reset_stats()
+        self.high_score = 0
         
         # Start the game in an inactive state (before pressing play)
         self.game_active = False
