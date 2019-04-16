@@ -114,6 +114,10 @@ def check_bullet_alien_collision(ai_settings, screen, stats, sb, ship,
         bullets.empty()
         ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
+        
+        # Increase the level to be shown on screen
+        stats.level += 1
+        sb.prep_level()
     
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, 
     bullets):
