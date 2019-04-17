@@ -248,6 +248,8 @@ def check_high_score(stats, sb):
     if stats.score > stats.high_score:
         stats.high_score = stats.score
         sb.prep_high_score()
+        stats.update_high_score(stats.score)
+        
     
         
 
